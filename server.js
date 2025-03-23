@@ -13,6 +13,7 @@ let dbType;
 
 // Check if running on Render (using PostgreSQL)
 if (process.env.DATABASE_URL) {
+    // We're on Render - use PostgreSQL
     dbType = 'pg';
     const { Pool } = require('pg');
     db = new Pool({
@@ -22,6 +23,17 @@ if (process.env.DATABASE_URL) {
         }
     });
     console.log('Using PostgreSQL database on Render');
+} else if (process.env.RENDER) {
+    // Another way to check if we're on Render
+    dbType = 'pg';
+    const { Pool } = require('pg');
+    db = new Pool({
+        connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/mydatabase',
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+    console.log('Using PostgreSQL database on Render (detected by RENDER env var)');
 } else {
     // Local development using MySQL
     dbType = 'mysql';
@@ -80,6 +92,9 @@ const initializeDb = async() => {
         console.log('Database initialized successfully');
     } catch (err) {
         console.error('Error initializing database:', err);
+        console.error('Database type:', dbType);
+        console.error('Environment variable DATABASE_URL exists:', !!process.env.DATABASE_URL);
+        console.error('Environment variable RENDER exists:', !!process.env.RENDER);
     }
 };
 
@@ -98,6 +113,7 @@ async function executeQuery(query, params = []) {
         }
     } catch (err) {
         console.error('Database query error:', err);
+        console.error('Database type:', dbType);
         throw err;
     }
 }
