@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: dental-web-app
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - fromDatabase:
+          name: dental-db
+          property: connectionString
+          key: DATABASE_URL
+
+databases:
+  - name: dental-db
+    plan: free
+    databaseName: mydatabase
+    user: dental_user 

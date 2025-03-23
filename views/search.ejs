@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Patients - Dental Patient Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="app-header">
+            <span style="font-size: 40px;">🦷</span>
+            <h1>Patient Search</h1>
+        </div>
+
+        <form action="/search" method="POST" class="search-form">
+            <div class="form-group">
+                <label for="search_term">Patient Name or Contact:</label>
+                <input type="text" id="search_term" name="search_term" placeholder="Enter patient name or contact number">
+            </div>
+
+            <div class="form-group">
+                <label for="visit_date">Visit Date:</label>
+                <input type="date" id="visit_date" name="visit_date">
+            </div>
+
+            <div class="form-info">
+                <p>Enter patient name, contact number, or visit date to find patient records</p>
+            </div>
+
+            <button type="submit">Find Patient</button>
+        </form>
+
+        <div class="links">
+            <a href="/">Back to Dashboard</a>
+            <a href="/records">View All Patients</a>
+        </div>
+    </div>
+</body>
+
+</html>
